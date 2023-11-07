@@ -1,0 +1,56 @@
+
+-- Inserts do Exercicio 1
+-- Insert into (tabela) (parametros) Values e os valores abaixo
+
+INSERT INTO professor (nome_prof,especialidade_prof,data_admissao_prof) VALUES
+("Clara Almeida", "Mecatrônica", "2023-06-11"),
+("João Gomes", "Elétrica", "2021-10-10"),
+("Fernando da Silva", "Mecanica", "2023-01-01"),
+("Bento Ramos" , "Elétrica","2022-02-02");
+COMMIT;
+
+-- Removi o Safe mode, para fazer o update abaixo --
+UPDATE professor
+set nome_prof = 'Clara De Almeida'
+WHERE nome_prof LIKE '%Clara Almeida%';
+
+--------------------------
+
+UPDATE professor
+set nome_prof = 'Clara De Almeida'
+WHERE codigo_prof = 5;
+
+
+COMMIT;
+
+SELECT nome_prof FROM professor;
+
+-- Exercicio 3 
+-- criação das disciplinas abaixo
+
+INSERT INTO disciplina (nome_disc,ementa_disc) VALUES
+("Automatização", "  A disciplina de Automação Industrial tem como objetivo atualizar os profissionais com conceitos e tecnologias normalmente encontradas em ambientes das indústrias. Desta forma, são discutidos tópicos atuais relativos a automação industrial e as tecnologias atualmente utilizadas na solução de problemas de controle na indústria, tendências para o futuro, vantagens de desvantagens relacionadas à implantação e operação de processos automatizados. Assim, ao final deste curso o aluno será capaz de compreender e interagir com processos automatizados de qualquer natureza. "),
+("Gastronomia", "A gastronomia e a cultura: sua história, seu simbolismo, sua arte e evolução através dos tempos e a importância de seu conhecimento na formação dos profissionais na área gastronômica. História da alimentação do homem. Surgimento dos modelos alimentares: do alimento à alimentação. A transformação da alimentação devido à evolução mundial. A superação do modelo alimentar europeu. ");
+
+SAVEPOINT savepoint_insert_disc;
+
+-- os 5 inserts apos o savepoint
+INSERT INTO disciplina (nome_disc, ementa_disc) 
+VALUES
+('Matemática Financeira', 'Matemática Financeira é o estudo das ferramentas matemáticas usadas na avaliação de investimentos, empréstimos e decisões financeiras, essencial para a gestão financeira pessoal e empresarial.'),
+('Modelagem de Software', 'Modelagem de Software é o estudo e prática da criação de representações visuais e conceituais de sistemas de software, facilitando o design, análise e compreensão de sistemas de software complexos.'),
+('Probabilidade e Estatística', 'Probabilidade e Estatística é o estudo das teorias e métodos usados para analisar dados, tomar decisões informadas e compreender a incerteza.'),
+('Estratégias em Tecnologia da Informação', 'Estratégias em Tecnologia da Informação aborda o planejamento e implementação de estratégias de TI para atingir objetivos organizacionais, explorando a aplicação eficaz da tecnologia da informação nas empresas.'),
+('Gestão de Infraestrutura de TI', 'Gestão de Infraestrutura de TI é o estudo das práticas e estratégias para gerenciar eficazmente os recursos de tecnologia da informação de uma organização, abrangendo tópicos como redes, servidores, segurança e manutenção de sistemas.');
+
+-- atualizando o nome da segunda disciplina
+UPDATE disciplina
+set nome_disc = "Modelagem de SoftwarE"
+where codigo_disc = 2;
+
+select * from disciplina;
+
+-- Deletando o ultimo registro --
+DELETE nome_disc from disciplina
+where codigo_disc = 6;
+

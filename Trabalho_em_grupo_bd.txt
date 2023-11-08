@@ -1,4 +1,3 @@
-
 -- Inserts do Exercicio 1
 -- Insert into (tabela) (parametros) Values e os valores abaixo
 
@@ -46,11 +45,13 @@ VALUES
 -- atualizando o nome da segunda disciplina
 UPDATE disciplina
 set nome_disc = "Modelagem de SoftwarE"
-where codigo_disc = 2;
+where codigo_disc = 15;
 
 select * from disciplina;
 
 -- Deletando o ultimo registro --
-DELETE nome_disc from disciplina
-where codigo_disc = 6;
+DELETE from disciplina
+where codigo_disc = 18;
 
+-- usando o RollBack para voltar no ultimo ponto de salvamento --
+ROLLBACK TO savepoint_insert_disc;

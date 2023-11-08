@@ -31,6 +31,8 @@ INSERT INTO disciplina (nome_disc,ementa_disc) VALUES
 ("Automatização", "  A disciplina de Automação Industrial tem como objetivo atualizar os profissionais com conceitos e tecnologias normalmente encontradas em ambientes das indústrias. Desta forma, são discutidos tópicos atuais relativos a automação industrial e as tecnologias atualmente utilizadas na solução de problemas de controle na indústria, tendências para o futuro, vantagens de desvantagens relacionadas à implantação e operação de processos automatizados. Assim, ao final deste curso o aluno será capaz de compreender e interagir com processos automatizados de qualquer natureza. "),
 ("Gastronomia", "A gastronomia e a cultura: sua história, seu simbolismo, sua arte e evolução através dos tempos e a importância de seu conhecimento na formação dos profissionais na área gastronômica. História da alimentação do homem. Surgimento dos modelos alimentares: do alimento à alimentação. A transformação da alimentação devido à evolução mundial. A superação do modelo alimentar europeu. ");
 
+SELECT * FROM disciplina;
+
 SAVEPOINT savepoint_insert_disc;
 
 -- os 5 inserts apos o savepoint
@@ -45,7 +47,7 @@ VALUES
 -- atualizando o nome da segunda disciplina
 UPDATE disciplina
 set nome_disc = "Modelagem de SoftwarE"
-where codigo_disc = 15;
+where codigo_disc = 11;
 
 select * from disciplina;
 
@@ -55,3 +57,89 @@ where codigo_disc = 18;
 
 -- usando o RollBack para voltar no ultimo ponto de salvamento --
 ROLLBACK TO savepoint_insert_disc;
+
+-- criação do savepoint antes do insert --
+SAVEPOINT savepoint_antes_insert;
+
+-- inserts abaixo --
+
+INSERT INTO info_pessoais_aluno (cpf, nome, tel_celular_resp, email_resp)
+VALUES
+('261.333.360-05','Mario Antunes','16924836566','rogerantunes9@email.com'),
+('122.194.950-00','Carlos Miguel','16937263513','guedesmiguel8@email.com'),
+('994.899.560-07','Carla Abrahão','16930492758','rodrigoabrahão32@email.com'),
+('246.031.310-11','Larissa Mello','16938282522','Kurojimello1@email.com');
+
+INSERT INTO aluno (data_inicio_aluno, cpf_aluno, email_aluno)
+VALUES
+('2022-05-10','261.333.360-05','marioantunes9@emaileduc.com'),
+('2022-07-19','122.194.950-00','carlosmiguel8@emaileduc.com'),
+('2022-05-20','994.899.560-07','carlaabrahão32@emaileduc.com'),
+('2022-07-15','246.031.310-11','larissamello1@emaileduc.com');
+
+-- conferindo --
+
+select * from aluno;
+
+-- update no aluno --
+update aluno
+set email_aluno =  "marioantunes9@meudominio.com"
+where num_matricula_aluno = 6;
+
+-- deletando o terceiro aluno inserido --
+
+DELETE FROM aluno
+where num_matricula_aluno = 8;
+
+-- Executando o rollback -- 
+
+ROLLBACK TO savepoint_antes_insert;
+
+
+-- Exercicio 5 --
+
+-- É inserido os novos cursos e após a inserção, um SP é executado --
+INSERT INTO curso (nome_curso, duracao_curso)
+VALUES
+('Tecnico em Usinagem', 18),
+('Técnico em gastrônomia ', 24);
+
+SAVEPOINT savepoint_inserts_curso;
+
+-- mais 3 novos cursos são inseridos --
+INSERT INTO curso (nome_curso, duracao_curso)
+VALUES
+('Tecnico em Robos', 18),
+('Técnico em Floricultura ', 24),
+("Tecnico em Biologia ", 23);
+
+-- conferindo --
+
+SELECT * FROM curso;
+
+-- Um novo savepoint é criado de acordo com a comanda --
+SAVEPOINT savepoint_inserts_turma;
+
+-- Insert das turmas --
+INSERT INTO turma (qtd_alunos_tur, periodo_tur, semestre_tur)
+VALUES
+(32, 'Manhã', '1 Semestre'),
+(35, 'Tarde', '3 Semestre'),
+(39, 'Manhã', '1 Semestre'),
+(22, 'Tarde', '3 Semestre');
+
+SELECT * FROM turma;
+
+-- O delete é criado usando o codigo da turma como referencia pro delete --
+DELETE FROM turma
+where codigo_tur = 9;
+
+ -- rollback executado --
+ROLLBACK TO savepoint_inserts_turma;
+ -- O commit final. --
+COMMIT;
+
+
+
+
+
